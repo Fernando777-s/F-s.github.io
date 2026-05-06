@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para ti ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    background: #f7e6dc;
+    font-family: Arial;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 🌳 ÁRBOL */
+.tree {
+    position: relative;
+    width: 300px;
+    height: 400px;
+}
+
+/* tronco */
+.trunk {
+    position: absolute;
+    bottom: 0;
+    left: 140px;
+    width: 20px;
+    height: 120px;
+    background: #6b3e26;
+}
+
+/* ❤️ corazón */
+.heart {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    animation: float 4s infinite ease-in-out;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.heart::before { top: -7px; }
+.heart::after { left: -7px; }
+
+/* animación suave */
+@keyframes float {
+    0% { transform: translateY(0) rotate(45deg); }
+    50% { transform: translateY(-10px) rotate(45deg); }
+    100% { transform: translateY(0) rotate(45deg); }
+}
+
+/* texto */
+.text {
+    width: 40%;
+}
+
+.typing {
+    font-size: 22px;
+    border-right: 2px solid black;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.counter {
+    margin-top: 20px;
+    color: #555;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🌳 -->
+    <div class="tree" id="tree">
+        <div class="trunk"></div>
+    </div>
+
+    <!-- 💌 -->
+    <div class="text">
+        <div class="typing" id="typing"></div>
+        <div class="counter" id="counter"></div>
+    </div>
+
+</div>
+
+<script>
+// 🌳 CREAR ÁRBOL CON FORMA
+const tree = document.getElementById("tree");
+
+for (let i = 0; i < 180; i++) {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+
+    // forma triangular (tipo árbol)
+    let y = Math.random() * 250;
+    let width = (250 - y) * 0.8; // se hace más angosto arriba
+
+    let x = 150 + (Math.random() - 0.5) * width;
+
+    heart.style.top = y + "px";
+    heart.style.left = x + "px";
+
+    heart.style.background = `hsl(${Math.random()*360},70%,65%)`;
+
+    tree.appendChild(heart);
+}
+
+// ✍️ TEXTO
+const text = "Hoy cumplimos 2 meses ❤️ Eres lo mejor que me ha pasado. Gracias por estar conmigo 💕";
+let i = 0;
+
+function typing() {
+    if (i < text.length) {
+        document.getElementById("typing").innerHTML += text[i];
+        i++;
+        setTimeout(typing, 50);
+    }
+}
+typing();
+
+// ⏳ CONTADOR
+const startDate = new Date("2026-03-06");
+
+function updateCounter() {
+    const now = new Date();
+    const diff = now - startDate;
+
+    let days = Math.floor(diff / (1000*60*60*24));
+
+    document.getElementById("counter").innerHTML =
+    "Llevamos juntos: " + days + " días ❤️";
+}
+
+setInterval(updateCounter, 1000);
+</script>
+
+</body>
+</html>
